@@ -1,0 +1,208 @@
+/* ── Hero ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(17,19,24,0.5) 60%, var(--dark) 100%),
+    url('https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=1600&q=80') center / cover no-repeat;
+}
+
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(46,134,222,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46,134,222,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 1;
+  animation: gridScroll 20s linear infinite;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding-top: 80px;
+}
+
+.hero__badge {
+  display: inline-block;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--blue-bright);
+  border: 1px solid var(--blue);
+  border-radius: 2px;
+  padding: 0.3rem 1rem;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--white);
+  animation: fadeUp 0.8s 0.15s ease both;
+}
+
+.hero__title span { color: var(--blue-bright); }
+
+.hero__sub {
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  font-weight: 300;
+  color: var(--light-gray);
+  max-width: 600px;
+  margin: 1.5rem auto 2.5rem;
+  line-height: 1.6;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+.hero__btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s 0.45s ease both;
+}
+
+.hero__stats {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 4rem;
+  animation: fadeUp 0.8s 0.6s ease both;
+}
+
+.hero__stat { text-align: center; }
+
+.hero__stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: var(--blue-bright);
+}
+
+.hero__stat-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.hero__scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  animation: bounce 2s infinite;
+}
+
+.hero__scroll-hint span {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+
+.hero__scroll-arrow {
+  width: 20px;
+  height: 20px;
+  border-right: 2px solid var(--blue);
+  border-bottom: 2px solid var(--blue);
+  transform: rotate(45deg);
+}
+
+/* ── Why / Features ── */
+.home__features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.home__feature-card {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem;
+  transition: all 0.3s;
+}
+
+.home__feature-card:hover {
+  border-color: var(--blue-bright);
+  transform: translateY(-3px);
+}
+
+.home__feature-icon { font-size: 1.6rem; flex-shrink: 0; }
+
+.home__feature-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+/* ── Testimonials ── */
+.home__testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+  align-items: stretch;
+}
+
+.home__testi-card {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.home__stars { color: var(--blue-bright); font-size: 1rem; margin-bottom: 1rem; }
+
+.home__testi-text {
+  font-size: 0.95rem;
+  color: var(--light-gray);
+  line-height: 1.7;
+  font-style: italic;
+  flex: 1;
+  margin-bottom: 1.5rem;
+}
+
+.home__testi-author {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  color: var(--white);
+  font-size: 0.95rem;
+}
+
+.home__testi-company { font-size: 0.82rem; color: var(--gray); margin-top: 0.2rem; }
+
+@media (max-width: 768px) {
+  .hero__stats { gap: 1.5rem; }
+}
