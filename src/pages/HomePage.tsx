@@ -1,16 +1,11 @@
-// src/pages/HomePage.tsx
-// Replace your full file with this version — testimonials section restored
-
 import React from 'react';
-import type { PageName } from '../types';
+import { useNavigate } from 'react-router-dom';
 import { HERO_STATS, TESTIMONIALS } from '../data';
 import './HomePage.css';
 
-interface HomePageProps {
-  setPage: (page: PageName) => void;
-}
+const HomePage: React.FC = () => {
+  const navigate = useNavigate();
 
-const HomePage: React.FC<HomePageProps> = ({ setPage }) => {
   const features = [
     '🏆 Top Market Rates',
     '📉 Lowest Fee Around',
@@ -39,10 +34,10 @@ const HomePage: React.FC<HomePageProps> = ({ setPage }) => {
             for your money.
           </p>
           <div className="hero__btns">
-            <button className="btn-primary" onClick={() => setPage('contact')}>
+            <button className="btn-primary" onClick={() => navigate('/contact')}>
               Start Working Together
             </button>
-            <button className="btn-outline" onClick={() => setPage('services')}>
+            <button className="btn-outline" onClick={() => navigate('/services')}>
               View Services
             </button>
           </div>
@@ -123,7 +118,7 @@ const HomePage: React.FC<HomePageProps> = ({ setPage }) => {
           Send me a message today and I'll respond within 2 hours. No fluff, no
           pressure — just a conversation about what your operation needs.
         </p>
-        <button className="btn-primary" onClick={() => setPage('contact')}>
+        <button className="btn-primary" onClick={() => navigate('/contact')}>
           Contact Me Now
         </button>
       </section>

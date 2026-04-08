@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import type { ContactForm } from "../types";
+import emailjs from "@emailjs/browser";
 import "./ContactPage.css";
+
+const EMAILJS_SERVICE_ID  = "service_rfflfn7";
+const EMAILJS_TEMPLATE_ID = "template_mgkumla"; // 👈 EmailJS → Email Templates
+const EMAILJS_PUBLIC_KEY  = "rQQZek4yyFS7RSgr8";  // 👈 EmailJS → Account → API Keys
+
 
 const INITIAL_FORM: ContactForm = {
   name: "",
@@ -11,20 +17,42 @@ const INITIAL_FORM: ContactForm = {
 };
 
 const ContactPage: React.FC = () => {
-  const [form, setForm] = useState<ContactForm>(INITIAL_FORM);
-  const [sent, setSent] = useState(false);
+  const [form, setForm]       = useState<ContactForm>(INITIAL_FORM);
+  const [sent, setSent]       = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError]     = useState<string | null>(null);
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    setForm(INITIAL_FORM);
-    setTimeout(() => setSent(false), 4500);
+    setSending(true);
+    setError(null);
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name:  form.name,
+          from_email: form.email,
+          phone:      form.phone || "Not provided",
+          trucks:     form.trucks,
+          message:    form.message,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
+
+      setSent(true);
+      setForm(INITIAL_FORM);
+      setTimeout(() => setSent(false), 4500);
+    } catch {
+      setError("Something went wrong. Please try again or email us directly.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const contactItems = [
@@ -68,7 +96,7 @@ const ContactPage: React.FC = () => {
           {/* Info */}
           <div className="contact__info">
             {contactItems.map((item) => (
-              <div className="contact__item card">
+              <div key={item.label} className="contact__item card">
                 <span className="contact__ico">{item.icon}</span>
                 <div>
                   <div className="contact__item-label">{item.label}</div>
@@ -126,8 +154,11 @@ const ContactPage: React.FC = () => {
               value={form.message}
               onChange={handleChange}
             />
-            <button type="submit" className="btn-primary">
-              Send Message →
+
+            {error && <p className="contact__error">{error}</p>}
+
+            <button type="submit" className="btn-primary" disabled={sending}>
+              {sending ? "Sending…" : "Send Message →"}
             </button>
           </form>
         </div>

@@ -1,12 +1,24 @@
 import React from 'react';
-import type { NavProps, PageName } from '../types';
+import { Link, useLocation } from 'react-router-dom';
 import '../styles/Nav.css';
 
-const PAGES: PageName[] = ['home', 'about', 'services', 'blog', 'contact'];
+const PAGES = [
+  { label: 'HOME',     path: '/'         },
+  { label: 'ABOUT',    path: '/about'    },
+  { label: 'SERVICES', path: '/services' },
+  { label: 'BLOG',     path: '/blog'     },
+  { label: 'CONTACT',  path: '/contact'  },
+];
 
-const Nav: React.FC<NavProps> = ({ page, setPage, menuOpen, setMenuOpen }) => {
-  const handleNav = (p: PageName) => {
-    setPage(p);
+interface NavProps {
+  menuOpen:    boolean;
+  setMenuOpen: (open: boolean) => void;
+}
+
+const Nav: React.FC<NavProps> = ({ menuOpen, setMenuOpen }) => {
+  const location = useLocation();
+
+  const closeMenu = () => {
     setMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -14,26 +26,34 @@ const Nav: React.FC<NavProps> = ({ page, setPage, menuOpen, setMenuOpen }) => {
   return (
     <>
       <nav className="nav">
-        <button className="nav__logo" onClick={() => handleNav('home')} aria-label="Corevanta Logistics Home">
+        <Link to="/" className="nav__logo" aria-label="Corevanta Logistics Home" onClick={closeMenu}>
           <img src="logoTransparent.png" alt="Corevanta Logistics" className="nav__logo-img" />
-        </button>
+        </Link>
 
         <ul className="nav__links">
           {PAGES.map((p) => (
-            <li key={p}>
-              <button onClick={() => handleNav(p)} className={page === p ? 'active' : ''}>
-                {p.toUpperCase()}
-              </button>
+            <li key={p.path}>
+              <Link
+                to={p.path}
+                className={location.pathname === p.path ? 'active' : ''}
+                onClick={closeMenu}
+              >
+                {p.label}
+              </Link>
             </li>
           ))}
           <li>
-            <button className="nav__cta" onClick={() => handleNav('contact')}>
+            <Link to="/contact" className="nav__cta" onClick={closeMenu}>
               GET STARTED
-            </button>
+            </Link>
           </li>
         </ul>
 
-        <button className="nav__hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+        <button
+          className="nav__hamburger"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
           {[0, 1, 2].map((i) => (
             <span key={i} className={menuOpen ? `open-${i}` : ''} />
           ))}
@@ -43,13 +63,13 @@ const Nav: React.FC<NavProps> = ({ page, setPage, menuOpen, setMenuOpen }) => {
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`}>
         <img src="/logo.png" alt="Corevanta Logistics" className="mobile-menu__logo" />
         {PAGES.map((p) => (
-          <button key={p} onClick={() => handleNav(p)}>
-            {p.toUpperCase()}
-          </button>
+          <Link key={p.path} to={p.path} onClick={closeMenu}>
+            {p.label}
+          </Link>
         ))}
-        <button className="mobile-menu__cta" onClick={() => handleNav('contact')}>
+        <Link to="/contact" className="mobile-menu__cta" onClick={closeMenu}>
           GET STARTED →
-        </button>
+        </Link>
       </div>
     </>
   );

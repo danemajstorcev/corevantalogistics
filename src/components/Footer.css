@@ -5,7 +5,7 @@
   display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem;
 }
 
-.footer__logo-img { height: 100px; width: 200px; margin-bottom: 1rem; }
+.footer__logo-img { height: 80px; width: 200px; margin-bottom: 1rem; }
 
 .footer__tagline { font-size: 0.9rem; color: #6b7c96; line-height: 1.6; max-width: 260px; }
 
@@ -26,7 +26,7 @@
 .footer__bottom {
   max-width: 1100px; margin: 2rem auto 0;
   padding-top: 1.5rem; border-top: 1px solid rgba(46,134,222,0.12);
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 1rem;
 }
 .footer__bottom p { font-size: 0.82rem; color: #6b7c96; }
 
